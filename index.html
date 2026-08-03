@@ -269,6 +269,76 @@ document.getElementById("totale").innerHTML =
 }
 
 </script>
+<div class="prodotto" onclick="aggiungi('Cono 1 gusto',2.50)">
+🍦 Cono 1 gusto<br>€2,50
+</div>
 
+<div class="prodotto" onclick="aggiungi('Cono 2 gusti',3)">
+🍦 Cono 2 gusti<br>€3,00
+</div>
+
+<div class="prodotto" onclick="aggiungi('Coppetta 2 gusti',3)">
+🥣 Coppetta 2 gusti<br>€3,00
+</div>
+
+<div class="prodotto" onclick="aggiungi('Cono 3 gusti',4)">
+🍦 Cono 3 gusti<br>€4,00
+</div>
+
+<div class="prodotto" onclick="aggiungi('Yogurt grande',5)">
+🍨 Yogurt grande<br>€5,00
+</div>
+
+<div class="prodotto" onclick="aggiungi('Bubble Tea Mango',5)">
+🧋 Bubble Tea Mango<br>€5,00
+</div>
+
+<div class="prodotto" onclick="aggiungi('Crêpes Nutella',5)">
+🥞 Crêpes Nutella<br>€5,00
+</div>
+
+<div class="prodotto" onclick="aggiungi('Granita Limone',3)">
+🧊 Granita Limone<br>€3,00
+</div>
+
+<div class="prodotto" onclick="aggiungi('Coca Cola',2)">
+🥤 Coca Cola<br>€2,00
+</div>
+
+
+<script>
+
+let totale = 0;
+let ordine = [];
+
+function aggiungi(nome, prezzo){
+
+    totale += prezzo;
+
+    ordine.push(nome);
+
+    document.getElementById("lista").innerHTML =
+    ordine.map(p => "🍦 " + p).join("<br>");
+
+    document.getElementById("totale").innerHTML =
+    "€" + totale.toFixed(2);
+
+}
+
+
+function azzera(){
+
+    totale = 0;
+    ordine = [];
+
+    document.getElementById("lista").innerHTML =
+    "Nessun prodotto";
+
+    document.getElementById("totale").innerHTML =
+    "€0.00";
+
+}
+
+</script>
 </body>
 </html>
