@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gelateria Dolce Freschezza</title>
+<title>Cassa Gelateria Dolce Freschezza</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
-background:#fff0f5;
+background:#fff4f8;
 }
 
 header{
@@ -20,11 +21,6 @@ padding:20px;
 text-align:center;
 font-size:28px;
 font-weight:bold;
-}
-
-.login{
-text-align:center;
-padding:40px;
 }
 
 button{
@@ -38,25 +34,35 @@ font-size:16px;
 cursor:pointer;
 }
 
+.login{
+text-align:center;
+padding:50px;
+}
+
 .cassa{
 display:none;
 padding:15px;
 }
 
-.grid{
+.categorie{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.prodotti{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:10px;
 }
 
-.card{
+.prodotto{
 background:white;
-padding:15px;
-border-radius:20px;
-box-shadow:0 3px 10px #ccc;
+box-shadow:0 4px 10px #ccc;
+min-height:70px;
 }
 
-#ordine{
+.ordine{
 background:white;
 padding:15px;
 border-radius:20px;
@@ -68,6 +74,7 @@ font-size:35px;
 color:green;
 font-weight:bold;
 }
+
 </style>
 
 </head>
@@ -94,60 +101,34 @@ font-weight:bold;
 </div>
 
 
+
 <div class="cassa" id="cassa">
 
 <h2 id="cassiera"></h2>
 
-<h2>🍦 Gelati</h2>
 
-<div class="grid">
+<div class="categorie">
 
-<button onclick="aggiungi('Cioccolato',2.5)">🍫 Cioccolato</button>
-<button onclick="aggiungi('Fragola',2.5)">🍓 Fragola</button>
-<button onclick="aggiungi('Pistacchio',2.5)">🥜 Pistacchio</button>
-<button onclick="aggiungi('Nocciola',2.5)">🌰 Nocciola</button>
-<button onclick="aggiungi('Vaniglia',2.5)">🍨 Vaniglia</button>
-<button onclick="aggiungi('Stracciatella',2.5)">🍫 Stracciatella</button>
-<button onclick="aggiungi('Cookies',2.5)">🍪 Cookies</button>
-<button onclick="aggiungi('Caramello',2.5)">🍯 Caramello</button>
-<button onclick="aggiungi('Tiramisù',2.5)">🍰 Tiramisù</button>
-<button onclick="aggiungi('Mango',2.5)">🥭 Mango</button>
-
-</div>
-<h2>🍨 Extra</h2>
-
-<div class="grid">
-
-<button onclick="aggiungi('Yogurt piccolo',3)">
-🍨 Yogurt piccolo €3
-</button>
-
-<button onclick="aggiungi('Yogurt grande',5)">
-🍨 Yogurt grande €5
-</button>
-
-<button onclick="aggiungi('Bubble Tea Mango',5)">
-🧋 Bubble Mango €5
-</button>
-
-<button onclick="aggiungi('Granita Limone',3)">
-🧊 Granita Limone €3
-</button>
-
-<button onclick="aggiungi('Coca Cola',2)">
-🥤 Coca Cola €2
-</button>
-
-<button onclick="aggiungi('Acqua',1)">
-💧 Acqua €1
-</button>
+<button onclick="mostra('gelati')">🍦 Gelati</button>
+<button onclick="mostra('yogurt')">🍨 Yogurt</button>
+<button onclick="mostra('granite')">🧊 Granite</button>
+<button onclick="mostra('bibite')">🥤 Bibite</button>
+<button onclick="mostra('bubble')">🧋 Bubble Tea</button>
+<button onclick="mostra('dolci')">🥞 Dolci</button>
 
 </div>
 
 
-<h2>🧾 Ordine</h2>
+<div class="prodotti" id="prodotti">
 
-<div id="ordine">
+</div>
+
+
+<div class="ordine">
+
+<h2>🧾 Scontrino</h2>
+
+<div id="scontrino">
 Nessun prodotto
 </div>
 
@@ -157,16 +138,19 @@ Nessun prodotto
 <div id="totale">
 €0.00
 </div>
-
-
-<button onclick="pagamento()">
+<button onclick="paga()">
 💳 Paga
 </button>
+
+<input id="soldi" type="number" placeholder="Soldi ricevuti €">
+
+<div id="resto"></div>
 
 <button onclick="nuovoOrdine()">
 🔄 Nuovo ordine
 </button>
 
+</div>
 
 </div>
 
@@ -174,7 +158,76 @@ Nessun prodotto
 <script>
 
 let totale=0;
-let prodotti=[];
+let ordine=[];
+
+
+const prodotti={
+
+gelati:[
+["🍫 Cioccolato",2.5],
+["🍓 Fragola",2.5],
+["🥜 Pistacchio",2.5],
+["🌰 Nocciola",2.5],
+["🍦 Crema",2.5],
+["🍨 Vaniglia",2.5],
+["🍋 Limone",2.5],
+["🍒 Amarena",2.5],
+["🍪 Biscotto",2.5],
+["🍫 Stracciatella",2.5],
+["☕ Caffè",2.5],
+["🥥 Cocco",2.5],
+["🍌 Banana",2.5],
+["🥭 Mango",2.5],
+["🍑 Pesca",2.5],
+["🫐 Frutti di bosco",2.5],
+["🍫 Cioccolato bianco",2.5],
+["🍪 Cookies",2.5],
+["🍯 Caramello salato",2.5],
+["🍰 Tiramisù",2.5]
+],
+
+yogurt:[
+["🍨 Yogurt piccolo",3],
+["🍨 Yogurt medio",4],
+["🍨 Yogurt grande",5],
+["🍫 Nutella extra",1.5],
+["🍓 Fragole extra",1.5]
+],
+
+granite:[
+["🍋 Limone",3],
+["🍓 Fragola",3],
+["🥭 Mango",3],
+["🍒 Amarena",3],
+["🍉 Anguria",3]
+],
+
+bibite:[
+["🥤 Coca Cola",2],
+["🍊 Fanta",2],
+["🍋 Sprite",2],
+["💧 Acqua",1],
+["🧃 Tè pesca",2],
+["🧃 Tè limone",2],
+["☕ Caffè",1.5]
+],
+
+bubble:[
+["🧋 Bubble Mango",5],
+["🧋 Bubble Fragola",5],
+["🧋 Bubble Pesca",5],
+["🧋 Bubble Lychee",5]
+],
+
+dolci:[
+["🥞 Crêpes Nutella",5],
+["🥞 Crêpes Pistacchio",5],
+["🧇 Waffle",4],
+["🍩 Donut",3]
+]
+
+};
+
 
 
 function entra(nome){
@@ -190,9 +243,38 @@ document.getElementById("cassiera").innerHTML=
 
 
 
+function mostra(tipo){
+
+let box=document.getElementById("prodotti");
+
+box.innerHTML="";
+
+
+prodotti[tipo].forEach(p=>{
+
+let b=document.createElement("button");
+
+b.className="prodotto";
+
+b.innerHTML=p[0]+"<br>€"+p[1];
+
+b.onclick=function(){
+
+aggiungi(p[0],p[1]);
+
+};
+
+box.appendChild(b);
+
+});
+
+}
+
+
+
 function aggiungi(nome,prezzo){
 
-prodotti.push(nome);
+ordine.push(nome);
 
 totale+=prezzo;
 
@@ -204,8 +286,8 @@ aggiorna();
 
 function aggiorna(){
 
-document.getElementById("ordine").innerHTML=
-prodotti.join("<br>");
+document.getElementById("scontrino").innerHTML=
+ordine.join("<br>");
 
 document.getElementById("totale").innerHTML=
 "€"+totale.toFixed(2);
@@ -214,22 +296,28 @@ document.getElementById("totale").innerHTML=
 
 
 
-function pagamento(){
+function paga(){
 
-if(totale==0){
+let soldi=
+Number(document.getElementById("soldi").value);
 
-alert("Aggiungi un prodotto");
 
-return;
+let resto=soldi-totale;
+
+
+if(resto<0){
+
+document.getElementById("resto").innerHTML=
+"❌ Mancano €"+(-resto).toFixed(2);
+
+}else{
+
+document.getElementById("resto").innerHTML=
+"💶 Resto cliente: €"+resto.toFixed(2);
+
+alert("Pagamento completato 🧾");
 
 }
-
-alert(
-"Pagamento completato!\nTotale €"+
-totale.toFixed(2)
-);
-
-nuovoOrdine();
 
 }
 
@@ -237,13 +325,22 @@ nuovoOrdine();
 
 function nuovoOrdine(){
 
+ordine=[];
+
 totale=0;
 
-prodotti=[];
+document.getElementById("soldi").value="";
+
+document.getElementById("resto").innerHTML="";
 
 aggiorna();
 
 }
+
+
+
+mostra("gelati");
+
 
 </script>
 
