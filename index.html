@@ -308,9 +308,21 @@ Nessun prodotto
 </div>
 
 
-<button class="tasto" onclick="pagamento()">
+<button class="tasto" onclick="mostraPagamento()">
 💳 Paga
 </button>
+
+<div id="pagamenti" style="display:none;">
+
+<button class="tasto" onclick="paga('Contanti')">
+💵 Contanti
+</button>
+
+<button class="tasto" onclick="paga('Carta')">
+💳 Carta
+</button>
+
+</div>
 
 
 <button class="tasto reset" onclick="nuovoOrdine()">
@@ -594,7 +606,39 @@ aggiorna();
 
 
 
-function pagamento(){
+function mostraPagamento(){
+
+document.getElementById("pagamenti").style.display="block";
+
+}
+
+
+
+function paga(metodo){
+
+if(totale===0){
+
+alert("Inserisci prima dei prodotti!");
+
+return;
+
+}
+
+
+alert(
+"Pagamento con "+metodo+
+" completato!\nTotale: €"+
+totale.toFixed(2)
+);
+
+
+nuovoOrdine();
+
+
+document.getElementById("pagamenti").style.display="none";
+
+
+}
 
 
 if(totale===0){
