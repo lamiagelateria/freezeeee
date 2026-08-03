@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gelateria Dolce Freschezza</title>
 
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #fff4e6;
+  text-align: center;
+  margin: 0;
+}
+
+h1 {
+  background: #ff9f43;
+  color: white;
+  padding: 20px;
+  margin: 0;
+}
+
+.box {
+  background: white;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px #ccc;
+}
+
+button {
+  background: #3498db;
+  color: white;
+  border: 0;
+  border-radius: 15px;
+  padding: 12px;
+  margin: 5px;
+  font-size: 16px;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+#totale {
+  font-size: 35px;
+  color: green;
+  font-weight: bold;
+}
+
+.reset {
+  background: #e74c3c;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🍦 Gelateria Dolce Freschezza 🍦</h1>
+
+<div class="box">
+<h2>🍦 Gelato</h2>
+<button onclick="aggiungi(2.50)">1 gusto €2,50</button>
+<button onclick="aggiungi(3)">2 gusti €3,00</button>
+<button onclick="aggiungi(4)">3 gusti €4,00</button>
+<button onclick="aggiungi(5)">4 gusti €5,00</button>
+</div>
+
+<div class="box">
+<h2>🍨 Yogurt</h2>
+<button onclick="aggiungi(3.50)">Piccolo €3,50</button>
+<button onclick="aggiungi(4.50)">Medio €4,50</button>
+<button onclick="aggiungi(5.50)">Grande €5,50</button>
+<button onclick="aggiungi(1.50)">Extra farcitura +€1,50</button>
+</div>
+
+<div class="box">
+<h2>🧋 Bubble Tea</h2>
+<button onclick="aggiungi(5.50)">Mango €5,50</button>
+<button onclick="aggiungi(5.50)">Fragola €5,50</button>
+<button onclick="aggiungi(5.50)">Pesca €5,50</button>
+<button onclick="aggiungi(5.50)">Latte €5,50</button>
+</div>
+
+<div class="box">
+<h2>🥞 Crêpes</h2>
+<button onclick="aggiungi(5)">Crêpes €5,00</button>
+<button onclick="aggiungi(1)">Extra farcitura +€1,00</button>
+</div>
+
+<div class="box">
+<h2>🧊 Granite</h2>
+<button onclick="aggiungi(2.50)">Piccola €2,50</button>
+<button onclick="aggiungi(3.50)">Media €3,50</button>
+<button onclick="aggiungi(4.50)">Grande €4,50</button>
+</div>
+
+<div class="box">
+<h2>🥤 Bibite</h2>
+<button onclick="aggiungi(1.50)">Acqua €1,50</button>
+<button onclick="aggiungi(2.50)">Bibita €2,50</button>
+</div>
+
+<div class="box">
+<h2>💰 Totale</h2>
+<div id="totale">€0,00</div>
+<button class="reset" onclick="azzera()">Nuovo cliente</button>
+</div>
+
+<script>
+let totale = 0;
+
+function aggiungi(prezzo) {
+  totale += prezzo;
+  document.getElementById("totale").innerHTML =
+  "€" + totale.toFixed(2);
+}
+
+function azzera() {
+  totale = 0;
+  document.getElementById("totale").innerHTML = "€0,00";
+}
+</script>
+
+</body>
+</html>
