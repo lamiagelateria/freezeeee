@@ -1,274 +1,3 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Gelateria Dolce Freschezza</title>
-
-<style>
-body {
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#fff3e0;
-    text-align:center;
-}
-
-header {
-    background:#ff6f91;
-    color:white;
-    padding:20px;
-    font-size:30px;
-    font-weight:bold;
-}
-
-h2 {
-    color:#d35400;
-}
-
-.menu {
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
-.card {
-    background:white;
-    width:250px;
-    margin:12px;
-    padding:20px;
-    border-radius:25px;
-    box-shadow:0 5px 15px #ccc;
-    display:inline-block;
-    vertical-align:top;
-}
-
-.card button {
-    display:inline-block;
-    width:110px;
-    min-height:45px;
-    margin:5px;
-    font-size:14px;
-}
-}
-
-.card img {
-    width:110px;
-    height:110px;
-}
-
-button {
-    background:#ff9f43;
-    color:white;
-    border:none;
-    border-radius:20px;
-    padding:10px;
-    margin:4px;
-    cursor:pointer;
-}
-
-button:hover {
-    background:#e67e22;
-}
-
-#ordine {
-    background:white;
-    margin:20px;
-    padding:20px;
-    border-radius:25px;
-}
-
-#totale {
-    font-size:35px;
-    color:green;
-    font-weight:bold;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-🍦 Gelateria Dolce Freschezza 🍦
-</header>
-
-<h2>Menu Gelateria</h2>
-<div class="card">
-
-<h2>🍦 Gelato</h2>
-
-<h3>Scegli formato</h3>
-
-<button onclick="aggiungi('Cono 1 gusto',2.50)">
-🍦 Cono 1 gusto €2,50
-</button>
-
-<button onclick="aggiungi('Coppetta 1 gusto',2.50)">
-🥣 Coppetta 1 gusto €2,50
-</button>
-
-<button onclick="aggiungi('Cono 2 gusti',3)">
-🍦 Cono 2 gusti €3,00
-</button>
-
-<button onclick="aggiungi('Coppetta 2 gusti',3)">
-🥣 Coppetta 2 gusti €3,00
-</button>
-
-<button onclick="aggiungi('Cono 3 gusti',4)">
-🍦 Cono 3 gusti €4,00
-</button>
-
-<button onclick="aggiungi('Coppetta 3 gusti',4)">
-🥣 Coppetta 3 gusti €4,00
-</button>
-
-
-<h3>🍨 Scegli i gusti</h3>
-
-<button onclick="aggiungi('Cioccolato',0)">🍫 Cioccolato</button>
-<button onclick="aggiungi('Fragola',0)">🍓 Fragola</button>
-<button onclick="aggiungi('Pistacchio',0)">🥜 Pistacchio</button>
-<button onclick="aggiungi('Nocciola',0)">🌰 Nocciola</button>
-<button onclick="aggiungi('Crema',0)">🍦 Crema</button>
-<button onclick="aggiungi('Vaniglia',0)">🍨 Vaniglia</button>
-<button onclick="aggiungi('Limone',0)">🍋 Limone</button>
-<button onclick="aggiungi('Amarena',0)">🍒 Amarena</button>
-<button onclick="aggiungi('Biscotto',0)">🍪 Biscotto</button>
-<button onclick="aggiungi('Stracciatella',0)">🍫 Stracciatella</button>
-<button onclick="aggiungi('Caffè',0)">☕ Caffè</button>
-<button onclick="aggiungi('Cocco',0)">🥥 Cocco</button>
-<button onclick="aggiungi('Banana',0)">🍌 Banana</button>
-<button onclick="aggiungi('Mango',0)">🥭 Mango</button>
-<button onclick="aggiungi('Pesca',0)">🍑 Pesca</button>
-<button onclick="aggiungi('Frutti di bosco',0)">🫐 Frutti di bosco</button>
-<button onclick="aggiungi('Cioccolato bianco',0)">🍫 Ciocco bianco</button>
-<button onclick="aggiungi('Cookies',0)">🍪 Cookies</button>
-<button onclick="aggiungi('Caramello salato',0)">🍯 Caramello</button>
-<button onclick="aggiungi('Tiramisù',0)">🍰 Tiramisù</button>
-
-</div>
-
-
-</div><div class="card">
-<h2>🍨 Yogurt</h2>
-
-<button onclick="aggiungi('Yogurt piccolo',3)">Piccolo €3</button>
-<button onclick="aggiungi('Yogurt medio',4)">Medio €4</button>
-<button onclick="aggiungi('Yogurt grande',5)">Grande €5</button>
-
-<h3>Farciture extra +€1,50</h3>
-
-<button onclick="aggiungi('Nutella',1.5)">🍫 Nutella</button>
-<button onclick="aggiungi('Fragole',1.5)">🍓 Fragole</button>
-<button onclick="aggiungi('Biscotti',1.5)">🍪 Biscotti</button>
-<button onclick="aggiungi('Granella nocciole',1.5)">🌰 Nocciole</button>
-
-</div>
-
-
-<div class="card">
-<h2>🧋 Bubble Tea</h2>
-
-<button onclick="aggiungi('Bubble Tea Mango',5)">🥭 Mango</button>
-<button onclick="aggiungi('Bubble Tea Fragola',5)">🍓 Fragola</button>
-<button onclick="aggiungi('Bubble Tea Pesca',5)">🍑 Pesca</button>
-<button onclick="aggiungi('Bubble Tea Classico',5)">🥛 Classico</button>
-
-</div>
-
-
-<div class="card">
-<h2>🥞 Crêpes</h2>
-
-<button onclick="aggiungi('Crêpes Nutella',5)">🍫 Nutella €5</button>
-<button onclick="aggiungi('Crêpes Fragola',5)">🍓 Fragola €5</button>
-<button onclick="aggiungi('Crêpes Pistacchio',5)">🥜 Pistacchio €5</button>
-
-</div>
-
-
-<div class="card">
-<h2>🧊 Granite</h2>
-
-<button onclick="aggiungi('Granita Limone',3)">🍋 Limone</button>
-<button onclick="aggiungi('Granita Fragola',3)">🍓 Fragola</button>
-<button onclick="aggiungi('Granita Mango',3)">🥭 Mango</button>
-<button onclick="aggiungi('Granita Anguria',3)">🍉 Anguria</button>
-<button onclick="aggiungi('Granita Amarena',3)">🍒 Amarena</button>
-<button onclick="aggiungi('Granita Menta',3)">🌿 Menta</button>
-
-</div>
-
-
-<div class="card">
-<h2>🥤 Bibite</h2>
-
-<button onclick="aggiungi('Coca Cola',2)">🥤 Coca Cola €2</button>
-<button onclick="aggiungi('Fanta',2)">🍊 Fanta €2</button>
-<button onclick="aggiungi('Sprite',2)">🍋 Sprite €2</button>
-<button onclick="aggiungi('Tè Pesca',2)">🧊 Tè Pesca €2</button>
-<button onclick="aggiungi('Acqua',1)">💧 Acqua €1</button>
-
-</div></div>
-
-<div id="ordine">
-
-<h2>🛒 Ordine</h2>
-
-<p id="lista">
-Nessun prodotto selezionato
-</p>
-
-<h2>Totale</h2>
-
-<div id="totale">
-€0,00
-</div>
-
-<button onclick="azzera()">
-🔄 Nuovo ordine
-</button>
-
-</div>
-
-
-<script>
-
-let totale = 0;
-let prodotti = [];
-
-function aggiungi(nome, prezzo){
-
-totale += prezzo;
-
-prodotti.push(nome);
-
-document.getElementById("lista").innerHTML =
-prodotti.map(p => "🍦 " + p).join("<br>");
-
-document.getElementById("totale").innerHTML =
-"€" + totale.toFixed(2);
-
-}
-
-
-function azzera(){
-
-totale = 0;
-prodotti = [];
-
-document.getElementById("lista").innerHTML =
-"Nessun prodotto selezionato";
-
-document.getElementById("totale").innerHTML =
-"€0,00";
-
-}
-
-</script>
 <div class="prodotto" onclick="aggiungi('Cono 1 gusto',2.50)">
 🍦 Cono 1 gusto<br>€2,50
 </div>
@@ -339,6 +68,164 @@ function azzera(){
 
 }
 
+</script><script>
+
+let totale = 0;
+let ordine = [];
+
+
+let prodotti = {
+
+gelati:[
+["🍦 Cono 1 gusto",2.50],
+["🍦 Cono 2 gusti",3],
+["🍦 Cono 3 gusti",4],
+["🥣 Coppetta 2 gusti",3],
+["🥣 Coppetta 3 gusti",4]
+],
+
+yogurt:[
+["🍨 Yogurt piccolo",3],
+["🍨 Yogurt medio",4],
+["🍨 Yogurt grande",5],
+["🍫 Nutella extra",1.5]
+],
+
+bibite:[
+["🥤 Coca Cola",2],
+["🍊 Fanta",2],
+["🍋 Sprite",2],
+["💧 Acqua",1]
+],
+
+dolci:[
+["🥞 Crêpes Nutella",5],
+["🥞 Crêpes Pistacchio",5],
+["🧇 Waffle",4],
+["🍰 Tiramisù",4]
+]
+
+};
+
+
+
+function mostra(categoria){
+
+let area = document.getElementById("prodotti");
+
+area.innerHTML="";
+
+
+prodotti[categoria].forEach(p=>{
+
+
+let bottone=document.createElement("button");
+
+bottone.className="prodotto";
+
+bottone.innerHTML =
+p[0]+"<br>€"+p[1].toFixed(2);
+
+
+bottone.onclick=function(){
+
+aggiungi(p[0],p[1]);
+
+};
+
+
+area.appendChild(bottone);
+
+
+});
+
+
+}
+
+
+
+
+function aggiungi(nome,prezzo){
+
+
+totale += prezzo;
+
+ordine.push(nome);
+
+
+aggiorna();
+
+
+}
+
+
+
+function aggiorna(){
+
+
+let lista=document.getElementById("lista");
+
+
+if(ordine.length===0){
+
+lista.innerHTML="Nessun prodotto";
+
+}else{
+
+lista.innerHTML =
+ordine.map(x=>"🍦 "+x).join("<br>");
+
+}
+
+
+document.getElementById("totale").innerHTML =
+"€"+totale.toFixed(2);
+
+
+}
+
+
+
+function azzera(){
+
+
+totale=0;
+
+ordine=[];
+
+aggiorna();
+
+
+}
+
+
+
+function pagamento(){
+
+
+if(totale==0){
+
+alert("Nessun prodotto nell'ordine");
+
+}else{
+
+alert("Pagamento completato! Totale €"+totale.toFixed(2));
+
+azzera();
+
+}
+
+
+}
+
+
+// apre subito i gelati
+
+mostra("gelati");
+
+
 </script>
+
+
 </body>
 </html>
