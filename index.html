@@ -1,146 +1,84 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cassa Gelateria Dolce Freschezza</title>
+<title>Gelateria Dolce Freschezza</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
 body{
 margin:0;
-background:#fff5ea;
+font-family:Arial;
+background:#fff0f5;
 }
 
-
 header{
-height:80px;
 background:linear-gradient(90deg,#ff6f91,#ff9f43);
 color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
+padding:20px;
+text-align:center;
+font-size:28px;
 font-weight:bold;
 }
 
-
-.cassa{
-display:flex;
-height:calc(100vh - 80px);
+.login{
+text-align:center;
+padding:40px;
 }
 
+button{
+border:0;
+border-radius:20px;
+padding:12px;
+margin:5px;
+background:#ff9f43;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
 
-.menu{
-width:220px;
-background:#ffd6e0;
+.cassa{
+display:none;
 padding:15px;
 }
 
-
-.menu button{
-width:100%;
-height:60px;
-margin-bottom:10px;
-border:0;
-border-radius:20px;
-background:#ff9f43;
-color:white;
-font-size:18px;
-font-weight:bold;
-}
-
-
-.prodotti{
-flex:1;
-padding:20px;
-overflow:auto;
-}
-
-
-.griglia{
+.grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:15px;
+gap:10px;
 }
 
-
-.prodotto{
-height:100px;
-border:0;
-border-radius:25px;
+.card{
 background:white;
-font-size:17px;
-box-shadow:0 5px 15px #ccc;
+padding:15px;
+border-radius:20px;
+box-shadow:0 3px 10px #ccc;
 }
 
-
-.ordine{
-width:330px;
+#ordine{
 background:white;
-padding:20px;
-box-shadow:-5px 0 15px #ccc;
+padding:15px;
+border-radius:20px;
+margin-top:20px;
 }
-
-
-#lista{
-height:45vh;
-overflow:auto;
-border:2px solid #eee;
-border-radius:15px;
-padding:10px;
-}
-
-
-.riga{
-display:flex;
-justify-content:space-between;
-margin:8px;
-}
-
 
 #totale{
-font-size:40px;
+font-size:35px;
 color:green;
 font-weight:bold;
-text-align:center;
 }
-
-
-.tasto{
-width:100%;
-height:55px;
-margin-top:10px;
-border:0;
-border-radius:20px;
-background:#27ae60;
-color:white;
-font-size:20px;
-}
-
-
-.reset{
-background:#e74c3c;
-}
-
-
 </style>
 
 </head>
 
 <body>
 
-
 <header>
-🍦 CASSA GELATERIA DOLCE FRESCHEZZA 🍦
+🍦 Gelateria Dolce Freschezza 🍦
 </header>
+
+
 <div class="login" id="login">
 
 <h2>Chi entra in cassa?</h2>
@@ -155,42 +93,61 @@ background:#e74c3c;
 
 </div>
 
+
 <div class="cassa" id="cassa">
 
+<h2 id="cassiera"></h2>
 
-<div class="menu">
+<h2>🍦 Gelati</h2>
 
-<button onclick="mostra('gelati')">🍦 Gelati</button>
+<div class="grid">
 
-<button onclick="mostra('yogurt')">🍨 Yogurt</button>
+<button onclick="aggiungi('Cioccolato',2.5)">🍫 Cioccolato</button>
+<button onclick="aggiungi('Fragola',2.5)">🍓 Fragola</button>
+<button onclick="aggiungi('Pistacchio',2.5)">🥜 Pistacchio</button>
+<button onclick="aggiungi('Nocciola',2.5)">🌰 Nocciola</button>
+<button onclick="aggiungi('Vaniglia',2.5)">🍨 Vaniglia</button>
+<button onclick="aggiungi('Stracciatella',2.5)">🍫 Stracciatella</button>
+<button onclick="aggiungi('Cookies',2.5)">🍪 Cookies</button>
+<button onclick="aggiungi('Caramello',2.5)">🍯 Caramello</button>
+<button onclick="aggiungi('Tiramisù',2.5)">🍰 Tiramisù</button>
+<button onclick="aggiungi('Mango',2.5)">🥭 Mango</button>
 
-<button onclick="mostra('bubble')">🧋 Bubble Tea</button>
+</div>
+<h2>🍨 Extra</h2>
 
-<button onclick="mostra('dolci')">🥞 Dolci</button>
+<div class="grid">
 
-<button onclick="mostra('granite')">🧊 Granite</button>
+<button onclick="aggiungi('Yogurt piccolo',3)">
+🍨 Yogurt piccolo €3
+</button>
 
-<button onclick="mostra('bibite')">🥤 Bibite</button>
+<button onclick="aggiungi('Yogurt grande',5)">
+🍨 Yogurt grande €5
+</button>
+
+<button onclick="aggiungi('Bubble Tea Mango',5)">
+🧋 Bubble Mango €5
+</button>
+
+<button onclick="aggiungi('Granita Limone',3)">
+🧊 Granita Limone €3
+</button>
+
+<button onclick="aggiungi('Coca Cola',2)">
+🥤 Coca Cola €2
+</button>
+
+<button onclick="aggiungi('Acqua',1)">
+💧 Acqua €1
+</button>
 
 </div>
 
-
-
-<div class="prodotti">
-
-<div id="griglia" class="griglia">
-
-</div>
-
-</div>
-
-
-
-<div class="ordine">
 
 <h2>🧾 Ordine</h2>
 
-<div id="lista">
+<div id="ordine">
 Nessun prodotto
 </div>
 
@@ -202,25 +159,11 @@ Nessun prodotto
 </div>
 
 
-<button class="tasto" onclick="apriPagamento()">
+<button onclick="pagamento()">
 💳 Paga
 </button>
 
-
-<div id="pagamenti" style="display:none">
-
-<button class="tasto" onclick="paga('Contanti')">
-💵 Contanti
-</button>
-
-<button class="tasto" onclick="paga('Carta')">
-💳 Carta
-</button>
-
-</div>
-
-
-<button class="tasto reset" onclick="reset()">
+<button onclick="nuovoOrdine()">
 🔄 Nuovo ordine
 </button>
 
@@ -228,373 +171,79 @@ Nessun prodotto
 </div>
 
 
-</div><script>
-
-let ordine=[];
+<script>
 
 let totale=0;
+let prodotti=[];
 
 
+function entra(nome){
 
-const prodotti={
+document.getElementById("login").style.display="none";
 
+document.getElementById("cassa").style.display="block";
 
-gelati:[
-
-["🍦 Cono 1 gusto",2.5],
-["🍦 Cono 2 gusti",3],
-["🍦 Cono 3 gusti",4],
-["🥣 Coppetta 1 gusto",2.5],
-["🥣 Coppetta 2 gusti",3],
-["🥣 Coppetta 3 gusti",4],
-["🍫 Cioccolato",0],
-["🍓 Fragola",0],
-["🥜 Pistacchio",0],
-["🌰 Nocciola",0],
-["🍪 Cookies",0],
-["🍫 Stracciatella",0],
-["🍯 Caramello salato",0],
-["🍒 Amarena",0],
-["🍋 Limone",0],
-["🥥 Cocco",0],
-["🥭 Mango",0],
-["🫐 Frutti di bosco",0],
-["🍰 Tiramisù",0],
-["🍫 Kinder",0],
-["🍪 Oreo",0]
-
-],
-
-
-
-yogurt:[
-
-["🍨 Yogurt piccolo",3],
-["🍨 Yogurt medio",4],
-["🍨 Yogurt grande",5],
-["🍫 Nutella extra",1.5],
-["🍓 Fragole extra",1.5],
-["🍪 Biscotti extra",1.5],
-["🌰 Granella nocciola",1.5]
-
-],
-
-
-
-bubble:[
-
-["🧋 Bubble Mango",5],
-["🧋 Bubble Fragola",5],
-["🧋 Bubble Pesca",5],
-["🧋 Bubble Melone",5],
-["🧋 Bubble Lychee",5],
-["🧋 Bubble Classico",5]
-
-],
-
-
-
-dolci:[
-
-["🥞 Crêpes Nutella",5],
-["🥞 Crêpes Pistacchio",5],
-["🥞 Crêpes Fragola",5],
-["🧇 Waffle",4],
-["🍰 Tiramisù",4],
-["🍩 Donut",3]
-
-],
-
-
-
-granite:[
-
-["🧊 Granita Limone",3],
-["🧊 Granita Fragola",3],
-["🧊 Granita Mango",3],
-["🧊 Granita Anguria",3],
-["🧊 Granita Menta",3],
-["🧊 Granita Amarena",3]
-
-],
-
-
-
-bibite:[
-
-["🥤 Coca Cola",2],
-["🍊 Fanta",2],
-["🍋 Sprite",2],
-["💧 Acqua",1],
-["🧃 Tè Pesca",2],
-["🧃 Tè Limone",2],
-["☕ Caffè",1.5]
-
-]
-
-
-};
-
-
-
-
-function mostra(categoria){
-
-
-let box=document.getElementById("griglia");
-
-box.innerHTML="";
-
-
-prodotti[categoria].forEach(p=>{
-
-
-let b=document.createElement("button");
-
-
-b.className="prodotto";
-
-
-b.innerHTML=p[0]+"<br>€"+p[1].toFixed(2);
-
-
-
-b.onclick=function(){
-
-aggiungi(p[0],p[1]);
-
-};
-
-
-box.appendChild(b);
-
-
-});
-
+document.getElementById("cassiera").innerHTML=
+"👩 Cassiera: "+nome;
 
 }
-
 
 
 
 function aggiungi(nome,prezzo){
 
+prodotti.push(nome);
 
-let prodotto=ordine.find(x=>x.nome==nome);
-
-
-if(prodotto){
-
-prodotto.qta++;
-
-}else{
-
-
-ordine.push({
-
-nome:nome,
-
-prezzo:prezzo,
-
-qta:1
-
-});
-
-
-}
-
-
-aggiorna();
-
-
-}
-
-
-
-
-function elimina(i){
-
-ordine.splice(i,1);
+totale+=prezzo;
 
 aggiorna();
 
 }
-
 
 
 
 function aggiorna(){
 
-
-let box=document.getElementById("lista");
-
-box.innerHTML="";
-
-totale=0;
-
-
-
-if(ordine.length==0){
-
-box.innerHTML="Nessun prodotto";
-
-}
-
-
-ordine.forEach((p,i)=>{
-
-
-totale+=p.prezzo*p.qta;
-
-
-box.innerHTML+=`
-
-<div class="riga">
-
-${p.nome} x${p.qta}
-
-<button onclick="elimina(${i})">
-
-❌
-
-</button>
-
-</div>
-
-`;
-
-
-});
-
+document.getElementById("ordine").innerHTML=
+prodotti.join("<br>");
 
 document.getElementById("totale").innerHTML=
-
 "€"+totale.toFixed(2);
 
-
-}
-
-function apriPagamento(){
-
-let p=document.getElementById("pagamenti");
-
-if(p.style.display=="none"){
-
-p.style.display="block";
-
-}else{
-
-p.style.display="none";
-
-}
-
 }
 
 
 
-function paga(metodo){
-
+function pagamento(){
 
 if(totale==0){
 
-alert("Aggiungi prima un prodotto!");
+alert("Aggiungi un prodotto");
 
 return;
 
 }
 
-
 alert(
-"Pagamento con "+metodo+
-" completato!\nTotale: €"+
+"Pagamento completato!\nTotale €"+
 totale.toFixed(2)
 );
 
-
-reset();
-
-
-document.getElementById("pagamenti").style.display="none";
-
+nuovoOrdine();
 
 }
 
 
 
-
-function reset(){
-
-
-ordine=[];
+function nuovoOrdine(){
 
 totale=0;
 
+prodotti=[];
+
 aggiorna();
 
-
 }
-
-
-
-mostra("gelati");
-
-
-</script>
-let operatore = "";
-
-function entraCassa(nome){
-
-operatore = nome;
-
-document.getElementById("schermataOperatore").style.display="none";
-
-alert("Benvenuta "+operatore+" 🍦");
-
-}
-
-</body>
-<div id="schermataOperatore" style="
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:linear-gradient(135deg,#ff6f91,#ffb347);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-color:white;
-z-index:9999;
-">
-
-<h1>🍦 Gelateria Dolce Freschezza 🍦</h1>
-
-<h2>Chi è alla cassa?</h2>
-
-<button onclick="entraCassa('Giulia')" style="
-font-size:25px;
-padding:20px;
-border-radius:25px;
-border:0;
-margin:10px;
-">
-👩 Giulia
-</button>
-
-<button onclick="entraCassa('Chiara')" style="
-font-size:25px;
-padding:20px;
-border-radius:25px;
-border:0;
-margin:10px;
-">
-👩 Chiara
-</button>
-
-</div>
-</html>
-
 
 </script>
 
