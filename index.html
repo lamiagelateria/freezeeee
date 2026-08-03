@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Cassa Gelateria Dolce Freschezza</title>
 
 <style>
+
+*{
+box-sizing:border-box;
+font-family:Arial;
+}
+
 body{
 margin:0;
-font-family:Arial,sans-serif;
 background:#fff5ea;
 }
 
@@ -22,6 +28,7 @@ font-size:30px;
 font-weight:bold;
 }
 
+
 button{
 border:0;
 border-radius:18px;
@@ -33,21 +40,24 @@ font-size:16px;
 font-weight:bold;
 }
 
+
 .login{
 text-align:center;
-padding:40px;
+padding:50px;
 }
+
 
 .cassa{
 display:none;
 padding:15px;
 }
 
-.categorie{
+
+.menu{
 display:flex;
 flex-wrap:wrap;
-justify-content:center;
 }
+
 
 .prodotti{
 display:grid;
@@ -55,34 +65,52 @@ grid-template-columns:repeat(3,1fr);
 gap:10px;
 }
 
+
 .prodotto{
 background:white;
 color:#333;
 box-shadow:0 4px 10px #ccc;
 }
 
-.ordine{
+
+.box{
 background:white;
-padding:15px;
 border-radius:20px;
+padding:15px;
 margin-top:15px;
 }
 
-#totale{
-font-size:35px;
-color:green;
-font-weight:bold;
+
+table{
+width:100%;
+border-collapse:collapse;
 }
 
-.calcolatrice button{
-background:#555;
-width:55px;
+
+td,th{
+padding:8px;
+border-bottom:1px solid #ddd;
+}
+
+
+#totale{
+font-size:35px;
+font-weight:bold;
+color:green;
+}
+
+
+.nascosto{
+display:none;
 }
 
 </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 🍦 CASSA GELATERIA DOLCE FRESCHEZZA 🍦
@@ -107,17 +135,35 @@ width:55px;
 
 <div class="cassa" id="cassa">
 
+
 <h2 id="cassiera"></h2>
 
 
-<div class="categorie">
+<div class="menu">
 
-<button onclick="mostra('gelati')">🍦 Gelati</button>
-<button onclick="mostra('yogurt')">🍨 Yogurt</button>
-<button onclick="mostra('granite')">🧊 Granite</button>
-<button onclick="mostra('bibite')">🥤 Bibite</button>
-<button onclick="mostra('bubble')">🧋 Bubble Tea</button>
-<button onclick="mostra('dolci')">🥞 Dolci</button>
+<button onclick="gelateria()">
+🍦 Gelato
+</button>
+
+<button onclick="mostraProdotti('bibite')">
+🥤 Bibite
+</button>
+
+<button onclick="mostraProdotti('granite')">
+🧊 Granite
+</button>
+
+<button onclick="mostraProdotti('bubble')">
+🧋 Bubble Tea
+</button>
+
+<button onclick="mostraProdotti('dolci')">
+🥞 Dolci
+</button>
+
+<button onclick="mostraProdotti('yogurt')">
+🍨 Yogurt
+</button>
 
 </div>
 
@@ -125,40 +171,88 @@ width:55px;
 <div id="prodotti" class="prodotti"></div>
 
 
-<div class="ordine">
 
-<h2>🧾 Scontrino</h2>
+<div id="sceltaGelato" class="box nascosto">
 
-<div id="scontrino">
-Nessun prodotto
+<h2>🍦 Tipo gelato</h2>
+
+<button onclick="iniziaGelato('Cono 1 gusto',2.5,1)">
+Cono 1 gusto €2,50
+</button>
+
+<button onclick="iniziaGelato('Cono 2 gusti',3,2)">
+Cono 2 gusti €3
+</button>
+
+<button onclick="iniziaGelato('Cono 3 gusti',4,3)">
+Cono 3 gusti €4
+</button>
+
+<button onclick="iniziaGelato('Coppetta',3,2)">
+Coppetta €3
+</button>
+
+
 </div>
 
 
-<h2>Totale</h2>
+<div id="gusti" class="box nascosto">
+
+<h2>🍨 Scegli i gusti</h2>
+
+<div id="listaGusti"></div>
+
+</div>
+
+
+<div id="aggiunte" class="box nascosto">
+
+<h2>➕ Aggiunte</h2>
+
+<button onclick="aggiunta('Panna montata',0.5)">
+🍦 Panna +€0,50
+</button>
+
+<button onclick="aggiunta('Nutella',0.5)">
+🍫 Nutella +€0,50
+</button>
+
+<button onclick="aggiunta('Granella nocciola',0.5)">
+🌰 Granella +€0,50
+</button>
+
+</div>
+<div class="box">
+
+<h2>🧾 Ordine</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Prodotto</th>
+<th>Prezzo</th>
+</tr>
+</thead>
+
+<tbody id="ordine">
+</tbody>
+
+</table>
+
+
+<h2>
+Totale
+</h2>
 
 <div id="totale">
 €0.00
 </div>
-<input id="soldi" placeholder="Soldi ricevuti €" readonly>
 
-<div class="calcolatrice">
 
-<button onclick="numero(1)">1</button>
-<button onclick="numero(2)">2</button>
-<button onclick="numero(3)">3</button>
+<h2>💶 Pagamento</h2>
 
-<button onclick="numero(4)">4</button>
-<button onclick="numero(5)">5</button>
-<button onclick="numero(6)">6</button>
-
-<button onclick="numero(7)">7</button>
-<button onclick="numero(8)">8</button>
-<button onclick="numero(9)">9</button>
-
-<button onclick="numero(0)">0</button>
-<button onclick="cancella()">❌</button>
-
-</div>
+<input id="soldi" type="number" placeholder="Soldi cliente">
 
 
 <button onclick="contanti()">
@@ -174,60 +268,48 @@ Nessun prodotto
 
 
 <button onclick="nuovoOrdine()">
-🔄 Nuovo ordine
+🔄 Nuovo cliente
 </button>
 
-
 </div>
 
-
-</div>
 
 
 <script>
 
 let totale=0;
 let ordine=[];
+let gustiScelti=[];
+let gustiDaScegliere=0;
+
+
+const gusti=[
+
+"🍫 Cioccolato",
+"🍓 Fragola",
+"🥜 Pistacchio",
+"🌰 Nocciola",
+"🍦 Crema",
+"🍨 Vaniglia",
+"🍪 Biscotto",
+"🍫 Stracciatella",
+"🍒 Amarena",
+"🍋 Limone",
+"🥥 Cocco",
+"🥭 Mango",
+"🫐 Frutti di bosco",
+"🍫 Kinder",
+"🍪 Oreo",
+"🍬 Pinguino",
+"🩵 Puffo",
+"🍰 Tiramisù"
+
+];
+
 
 
 const prodotti={
 
-gelati:[
-["🍫 Cioccolato",2.5],
-["🍓 Fragola",2.5],
-["🥜 Pistacchio",2.5],
-["🌰 Nocciola",2.5],
-["🍦 Crema",2.5],
-["🍨 Vaniglia",2.5],
-["🍋 Limone",2.5],
-["🍒 Amarena",2.5],
-["🍪 Biscotto",2.5],
-["🍫 Stracciatella",2.5],
-["☕ Caffè",2.5],
-["🥥 Cocco",2.5],
-["🍌 Banana",2.5],
-["🥭 Mango",2.5],
-["🍑 Pesca",2.5],
-["🫐 Frutti di bosco",2.5],
-["🍫 Ciocco bianco",2.5],
-["🍪 Cookies",2.5],
-["🍯 Caramello",2.5],
-["🍰 Tiramisù",2.5]
-],
-
-yogurt:[
-["🍨 Yogurt piccolo",3],
-["🍨 Yogurt grande",5],
-["🍫 Nutella",1.5],
-["🍓 Fragole",1.5]
-],
-
-granite:[
-["🍋 Limone",3],
-["🍓 Fragola",3],
-["🥭 Mango",3],
-["🍒 Amarena",3]
-],
 
 bibite:[
 ["🥤 Coca Cola",2],
@@ -237,16 +319,30 @@ bibite:[
 ["🧃 Tè Pesca",2]
 ],
 
+
+granite:[
+["🧊 Limone",3],
+["🧊 Fragola",3],
+["🧊 Mango",3]
+],
+
+
 bubble:[
 ["🧋 Bubble Mango",5],
-["🧋 Bubble Fragola",5],
-["🧋 Bubble Pesca",5]
+["🧋 Bubble Fragola",5]
 ],
+
 
 dolci:[
 ["🥞 Crêpes Nutella",5],
 ["🧇 Waffle",4],
 ["🍩 Donut",3]
+],
+
+
+yogurt:[
+["🍨 Yogurt piccolo",3],
+["🍨 Yogurt grande",5]
 ]
 
 };
@@ -266,7 +362,89 @@ document.getElementById("cassiera").innerHTML=
 
 
 
-function mostra(tipo){
+function gelateria(){
+
+document.getElementById("sceltaGelato").classList.remove("nascosto");
+
+document.getElementById("prodotti").innerHTML="";
+
+}
+
+
+
+function iniziaGelato(nome,prezzo,numero){
+
+ordine.push({
+nome:nome,
+prezzo:prezzo
+});
+
+totale+=prezzo;
+
+gustiDaScegliere=numero;
+
+gustiScelti=[];
+
+
+document.getElementById("gusti").classList.remove("nascosto");
+
+
+let box=document.getElementById("listaGusti");
+
+box.innerHTML="";
+
+
+gusti.forEach(g=>{
+
+let b=document.createElement("button");
+
+b.innerHTML=g;
+
+b.onclick=function(){
+
+if(gustiScelti.length<gustiDaScegliere){
+
+gustiScelti.push(g);
+
+if(gustiScelti.length==gustiDaScegliere){
+
+ordine[ordine.length-1].nome +=
+"<br>"+gustiScelti.join(" ");
+
+aggiorna();
+
+}
+
+}
+
+};
+
+
+box.appendChild(b);
+
+});
+
+
+}
+
+
+
+function aggiunta(nome,prezzo){
+
+ordine.push({
+nome:nome,
+prezzo:prezzo
+});
+
+totale+=prezzo;
+
+aggiorna();
+
+}
+
+
+
+function mostraProdotti(tipo){
 
 let box=document.getElementById("prodotti");
 
@@ -279,31 +457,28 @@ let b=document.createElement("button");
 
 b.className="prodotto";
 
-b.innerHTML=p[0]+"<br>€"+p[1].toFixed(2);
+b.innerHTML=p[0]+"<br>€"+p[1];
 
 
 b.onclick=function(){
 
-aggiungi(p[0],p[1]);
+ordine.push({
+nome:p[0],
+prezzo:p[1]
+});
+
+totale+=p[1];
+
+aggiorna();
 
 };
 
 
 box.appendChild(b);
 
+
 });
 
-}
-
-
-
-function aggiungi(nome,prezzo){
-
-ordine.push(nome);
-
-totale+=prezzo;
-
-aggiorna();
 
 }
 
@@ -311,27 +486,27 @@ aggiorna();
 
 function aggiorna(){
 
-document.getElementById("scontrino").innerHTML=
-ordine.join("<br>");
+let box=document.getElementById("ordine");
+
+box.innerHTML="";
+
+
+ordine.forEach(p=>{
+
+box.innerHTML+=`
+
+<tr>
+<td>${p.nome}</td>
+<td>€${p.prezzo.toFixed(2)}</td>
+</tr>
+
+`;
+
+});
+
 
 document.getElementById("totale").innerHTML=
 "€"+totale.toFixed(2);
-
-}
-
-
-
-function numero(n){
-
-document.getElementById("soldi").value += n;
-
-}
-
-
-
-function cancella(){
-
-document.getElementById("soldi").value="";
 
 }
 
@@ -341,13 +516,13 @@ function contanti(){
 
 let soldi=Number(document.getElementById("soldi").value);
 
+
 let resto=soldi-totale;
 
 
 document.getElementById("resto").innerHTML=
 "💶 Resto cliente: €"+resto.toFixed(2);
 
-alert("Pagamento completato 🧾");
 
 }
 
@@ -355,7 +530,7 @@ alert("Pagamento completato 🧾");
 
 function carta(){
 
-alert("💳 Pagamento con carta completato!");
+alert("💳 Pagamento carta completato");
 
 nuovoOrdine();
 
@@ -365,9 +540,9 @@ nuovoOrdine();
 
 function nuovoOrdine(){
 
-totale=0;
-
 ordine=[];
+
+totale=0;
 
 document.getElementById("soldi").value="";
 
@@ -378,10 +553,9 @@ aggiorna();
 }
 
 
-mostra("gelati");
-
-
 </script>
 
+
 </body>
+
 </html>
