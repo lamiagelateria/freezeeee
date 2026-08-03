@@ -11,19 +11,17 @@
 
 *{
 box-sizing:border-box;
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
 margin:0;
-background:#fff4e6;
+background:#fff5ea;
 }
 
 
-/* TESTATA */
-
 header{
-height:75px;
+height:80px;
 background:linear-gradient(90deg,#ff6f91,#ff9f43);
 color:white;
 display:flex;
@@ -34,53 +32,31 @@ font-weight:bold;
 }
 
 
-
-/* STRUTTURA CASSA */
-
 .cassa{
 display:flex;
-height:calc(100vh - 75px);
+height:calc(100vh - 80px);
 }
 
 
-
-/* CATEGORIE */
-
 .menu{
-width:210px;
+width:220px;
 background:#ffd6e0;
 padding:15px;
 }
 
 
-.menu h2{
-text-align:center;
-color:#d35400;
-}
-
-
 .menu button{
-
 width:100%;
 height:60px;
-margin-bottom:12px;
-
+margin-bottom:10px;
 border:0;
 border-radius:20px;
-
 background:#ff9f43;
 color:white;
-
 font-size:18px;
 font-weight:bold;
-
-cursor:pointer;
-
 }
 
-
-
-/* AREA PRODOTTI */
 
 .prodotti{
 flex:1;
@@ -90,153 +66,74 @@ overflow:auto;
 
 
 .griglia{
-
 display:grid;
-
 grid-template-columns:repeat(3,1fr);
-
 gap:15px;
-
 }
-
 
 
 .prodotto{
-
-height:110px;
-
-background:white;
-
+height:100px;
 border:0;
-
 border-radius:25px;
-
-box-shadow:0 5px 15px #ccc;
-
+background:white;
 font-size:17px;
-
-cursor:pointer;
-
-transition:0.2s;
-
+box-shadow:0 5px 15px #ccc;
 }
 
-
-
-.prodotto:hover{
-
-transform:scale(1.05);
-
-background:#fff1a8;
-
-}
-
-
-
-/* ORDINE */
 
 .ordine{
-
 width:330px;
-
 background:white;
-
 padding:20px;
-
 box-shadow:-5px 0 15px #ccc;
-
 }
-
-
-
-.ordine h2{
-
-text-align:center;
-
-color:#d35400;
-
-}
-
 
 
 #lista{
-
 height:45vh;
-
 overflow:auto;
-
 border:2px solid #eee;
-
 border-radius:15px;
-
 padding:10px;
-
 }
-
 
 
 .riga{
-
 display:flex;
-
 justify-content:space-between;
-
-margin:8px 0;
-
+margin:8px;
 }
-
 
 
 #totale{
-
 font-size:40px;
-
-font-weight:bold;
-
 color:green;
-
+font-weight:bold;
 text-align:center;
-
 }
-
 
 
 .tasto{
-
 width:100%;
-
-height:60px;
-
-border:0;
-
-border-radius:20px;
-
+height:55px;
 margin-top:10px;
-
-font-size:20px;
-
-color:white;
-
+border:0;
+border-radius:20px;
 background:#27ae60;
-
-cursor:pointer;
-
+color:white;
+font-size:20px;
 }
-
 
 
 .reset{
-
 background:#e74c3c;
-
 }
-
 
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -251,32 +148,17 @@ background:#e74c3c;
 
 <div class="menu">
 
-<h2>Menu</h2>
+<button onclick="mostra('gelati')">🍦 Gelati</button>
 
-<button onclick="categoria('gelati')">
-🍦 Gelati
-</button>
+<button onclick="mostra('yogurt')">🍨 Yogurt</button>
 
-<button onclick="categoria('yogurt')">
-🍨 Yogurt
-</button>
+<button onclick="mostra('bubble')">🧋 Bubble Tea</button>
 
-<button onclick="categoria('bubble')">
-🧋 Bubble Tea
-</button>
+<button onclick="mostra('dolci')">🥞 Dolci</button>
 
-<button onclick="categoria('dolci')">
-🥞 Dolci
-</button>
+<button onclick="mostra('granite')">🧊 Granite</button>
 
-<button onclick="categoria('granite')">
-🧊 Granite
-</button>
-
-<button onclick="categoria('bibite')">
-🥤 Bibite
-</button>
-
+<button onclick="mostra('bibite')">🥤 Bibite</button>
 
 </div>
 
@@ -284,7 +166,7 @@ background:#e74c3c;
 
 <div class="prodotti">
 
-<div class="griglia" id="griglia">
+<div id="griglia" class="griglia">
 
 </div>
 
@@ -308,11 +190,12 @@ Nessun prodotto
 </div>
 
 
-<button class="tasto" onclick="mostraPagamento()">
+<button class="tasto" onclick="apriPagamento()">
 💳 Paga
 </button>
 
-<div id="pagamenti" style="display:none;">
+
+<div id="pagamenti" style="display:none">
 
 <button class="tasto" onclick="paga('Contanti')">
 💵 Contanti
@@ -325,7 +208,7 @@ Nessun prodotto
 </div>
 
 
-<button class="tasto reset" onclick="nuovoOrdine()">
+<button class="tasto reset" onclick="reset()">
 🔄 Nuovo ordine
 </button>
 
@@ -333,33 +216,40 @@ Nessun prodotto
 </div>
 
 
-</div>
-<script>
+</div><script>
 
+let ordine=[];
 
-let ordine = [];
-
-let totale = 0;
+let totale=0;
 
 
 
-const prodotti = {
+const prodotti={
 
 
 gelati:[
 
-["🍦 Cono 1 gusto",2.50],
+["🍦 Cono 1 gusto",2.5],
 ["🍦 Cono 2 gusti",3],
 ["🍦 Cono 3 gusti",4],
-["🥣 Coppetta 1 gusto",2.50],
+["🥣 Coppetta 1 gusto",2.5],
 ["🥣 Coppetta 2 gusti",3],
 ["🥣 Coppetta 3 gusti",4],
 ["🍫 Cioccolato",0],
 ["🍓 Fragola",0],
 ["🥜 Pistacchio",0],
 ["🌰 Nocciola",0],
-["🍦 Crema",0],
-["🍨 Vaniglia",0]
+["🍪 Cookies",0],
+["🍫 Stracciatella",0],
+["🍯 Caramello salato",0],
+["🍒 Amarena",0],
+["🍋 Limone",0],
+["🥥 Cocco",0],
+["🥭 Mango",0],
+["🫐 Frutti di bosco",0],
+["🍰 Tiramisù",0],
+["🍫 Kinder",0],
+["🍪 Oreo",0]
 
 ],
 
@@ -372,7 +262,8 @@ yogurt:[
 ["🍨 Yogurt grande",5],
 ["🍫 Nutella extra",1.5],
 ["🍓 Fragole extra",1.5],
-["🍪 Biscotti extra",1.5]
+["🍪 Biscotti extra",1.5],
+["🌰 Granella nocciola",1.5]
 
 ],
 
@@ -383,6 +274,8 @@ bubble:[
 ["🧋 Bubble Mango",5],
 ["🧋 Bubble Fragola",5],
 ["🧋 Bubble Pesca",5],
+["🧋 Bubble Melone",5],
+["🧋 Bubble Lychee",5],
 ["🧋 Bubble Classico",5]
 
 ],
@@ -393,8 +286,10 @@ dolci:[
 
 ["🥞 Crêpes Nutella",5],
 ["🥞 Crêpes Pistacchio",5],
+["🥞 Crêpes Fragola",5],
 ["🧇 Waffle",4],
-["🍰 Tiramisù",4]
+["🍰 Tiramisù",4],
+["🍩 Donut",3]
 
 ],
 
@@ -405,6 +300,8 @@ granite:[
 ["🧊 Granita Limone",3],
 ["🧊 Granita Fragola",3],
 ["🧊 Granita Mango",3],
+["🧊 Granita Anguria",3],
+["🧊 Granita Menta",3],
 ["🧊 Granita Amarena",3]
 
 ],
@@ -417,7 +314,9 @@ bibite:[
 ["🍊 Fanta",2],
 ["🍋 Sprite",2],
 ["💧 Acqua",1],
-["🧃 Tè Pesca",2]
+["🧃 Tè Pesca",2],
+["🧃 Tè Limone",2],
+["☕ Caffè",1.5]
 
 ]
 
@@ -427,17 +326,15 @@ bibite:[
 
 
 
-
-function categoria(nome){
+function mostra(categoria){
 
 
 let box=document.getElementById("griglia");
 
-
 box.innerHTML="";
 
 
-prodotti[nome].forEach(p=>{
+prodotti[categoria].forEach(p=>{
 
 
 let b=document.createElement("button");
@@ -446,8 +343,7 @@ let b=document.createElement("button");
 b.className="prodotto";
 
 
-b.innerHTML=
-p[0]+"<br>€"+p[1].toFixed(2);
+b.innerHTML=p[0]+"<br>€"+p[1].toFixed(2);
 
 
 
@@ -456,7 +352,6 @@ b.onclick=function(){
 aggiungi(p[0],p[1]);
 
 };
-
 
 
 box.appendChild(b);
@@ -470,16 +365,15 @@ box.appendChild(b);
 
 
 
-
 function aggiungi(nome,prezzo){
 
 
-let trovato=ordine.find(x=>x.nome===nome);
+let prodotto=ordine.find(x=>x.nome==nome);
 
 
-if(trovato){
+if(prodotto){
 
-trovato.quantita++;
+prodotto.qta++;
 
 }else{
 
@@ -490,7 +384,7 @@ nome:nome,
 
 prezzo:prezzo,
 
-quantita:1
+qta:1
 
 });
 
@@ -506,20 +400,13 @@ aggiorna();
 
 
 
+function elimina(i){
 
-function rimuovi(indice){
-
-
-ordine.splice(indice,1);
-
+ordine.splice(i,1);
 
 aggiorna();
 
-
 }
-
-
-
 
 
 
@@ -527,64 +414,45 @@ aggiorna();
 function aggiorna(){
 
 
-let lista=document.getElementById("lista");
+let box=document.getElementById("lista");
 
-
-lista.innerHTML="";
-
+box.innerHTML="";
 
 totale=0;
 
 
 
-if(ordine.length===0){
+if(ordine.length==0){
 
-lista.innerHTML="Nessun prodotto";
+box.innerHTML="Nessun prodotto";
 
-
-}else{
+}
 
 
 ordine.forEach((p,i)=>{
 
 
-totale += p.prezzo*p.quantita;
+totale+=p.prezzo*p.qta;
 
 
-
-lista.innerHTML +=
-
-`
+box.innerHTML+=`
 
 <div class="riga">
 
-<span>
+${p.nome} x${p.qta}
 
-${p.nome}
-
-x${p.quantita}
-
-</span>
-
-
-<button onclick="rimuovi(${i})">
+<button onclick="elimina(${i})">
 
 ❌
 
 </button>
-
 
 </div>
 
 `;
 
 
-
 });
-
-
-}
-
 
 
 document.getElementById("totale").innerHTML=
@@ -592,23 +460,21 @@ document.getElementById("totale").innerHTML=
 "€"+totale.toFixed(2);
 
 
-
-}
-function nuovoOrdine(){
-
-ordine=[];
-
-totale=0;
-
-aggiorna();
-
 }
 
+function apriPagamento(){
 
+let p=document.getElementById("pagamenti");
 
-function mostraPagamento(){
+if(p.style.display=="none"){
 
-document.getElementById("pagamenti").style.display="block";
+p.style.display="block";
+
+}else{
+
+p.style.display="none";
+
+}
 
 }
 
@@ -616,9 +482,10 @@ document.getElementById("pagamenti").style.display="block";
 
 function paga(metodo){
 
-if(totale===0){
 
-alert("Inserisci prima dei prodotti!");
+if(totale==0){
+
+alert("Aggiungi prima un prodotto!");
 
 return;
 
@@ -632,7 +499,7 @@ totale.toFixed(2)
 );
 
 
-nuovoOrdine();
+reset();
 
 
 document.getElementById("pagamenti").style.display="none";
@@ -641,88 +508,24 @@ document.getElementById("pagamenti").style.display="none";
 }
 
 
-if(totale===0){
-
-alert("Inserisci prima dei prodotti nell'ordine!");
-
-return;
-
-}
 
 
-let metodo=prompt(
-"Metodo di pagamento:\n1 = Contanti\n2 = Carta"
-);
+function reset(){
 
 
+ordine=[];
 
-if(metodo=="1"){
+totale=0;
 
-alert(
-"Pagamento in contanti completato!\nTotale: €"+
-totale.toFixed(2)
-);
-
-}
-
-
-
-else if(metodo=="2"){
-
-alert(
-"Pagamento con carta completato!\nTotale: €"+
-totale.toFixed(2)
-);
-
-}
-
-
-else{
-
-alert("Metodo non valido");
-
-return;
-
-}
-
-
-
-nuovoOrdine();
+aggiorna();
 
 
 }
 
 
 
+mostra("gelati");
 
-// apre automaticamente i gelati
-
-categoria("gelati");
-function mostraPagamento(){
-
-let scelta = document.getElementById("pagamenti");
-
-if(scelta.style.display=="none"){
-scelta.style.display="block";
-}else{
-scelta.style.display="none";
-}
-
-}
-
-
-function paga(metodo){
-
-if(totale===0){
-alert("Aggiungi prima un prodotto!");
-return;
-}
-
-alert("Pagamento con "+metodo+" completato!\nTotale: €"+totale.toFixed(2));
-
-nuovoOrdine();
-
-}
 
 </script>
 
