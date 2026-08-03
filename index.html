@@ -698,7 +698,31 @@ nuovoOrdine();
 // apre automaticamente i gelati
 
 categoria("gelati");
+function mostraPagamento(){
 
+let scelta = document.getElementById("pagamenti");
+
+if(scelta.style.display=="none"){
+scelta.style.display="block";
+}else{
+scelta.style.display="none";
+}
+
+}
+
+
+function paga(metodo){
+
+if(totale===0){
+alert("Aggiungi prima un prodotto!");
+return;
+}
+
+alert("Pagamento con "+metodo+" completato!\nTotale: €"+totale.toFixed(2));
+
+nuovoOrdine();
+
+}
 
 </script>
 
