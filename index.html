@@ -1,140 +1,453 @@
-<div class="prodotto" onclick="aggiungi('Cono 1 gusto',2.50)">
-🍦 Cono 1 gusto<br>€2,50
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cassa Gelateria Dolce Freschezza</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+margin:0;
+background:#fff4e6;
+}
+
+
+/* TESTATA */
+
+header{
+height:75px;
+background:linear-gradient(90deg,#ff6f91,#ff9f43);
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+font-weight:bold;
+}
+
+
+
+/* STRUTTURA CASSA */
+
+.cassa{
+display:flex;
+height:calc(100vh - 75px);
+}
+
+
+
+/* CATEGORIE */
+
+.menu{
+width:210px;
+background:#ffd6e0;
+padding:15px;
+}
+
+
+.menu h2{
+text-align:center;
+color:#d35400;
+}
+
+
+.menu button{
+
+width:100%;
+height:60px;
+margin-bottom:12px;
+
+border:0;
+border-radius:20px;
+
+background:#ff9f43;
+color:white;
+
+font-size:18px;
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+/* AREA PRODOTTI */
+
+.prodotti{
+flex:1;
+padding:20px;
+overflow:auto;
+}
+
+
+.griglia{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:15px;
+
+}
+
+
+
+.prodotto{
+
+height:110px;
+
+background:white;
+
+border:0;
+
+border-radius:25px;
+
+box-shadow:0 5px 15px #ccc;
+
+font-size:17px;
+
+cursor:pointer;
+
+transition:0.2s;
+
+}
+
+
+
+.prodotto:hover{
+
+transform:scale(1.05);
+
+background:#fff1a8;
+
+}
+
+
+
+/* ORDINE */
+
+.ordine{
+
+width:330px;
+
+background:white;
+
+padding:20px;
+
+box-shadow:-5px 0 15px #ccc;
+
+}
+
+
+
+.ordine h2{
+
+text-align:center;
+
+color:#d35400;
+
+}
+
+
+
+#lista{
+
+height:45vh;
+
+overflow:auto;
+
+border:2px solid #eee;
+
+border-radius:15px;
+
+padding:10px;
+
+}
+
+
+
+.riga{
+
+display:flex;
+
+justify-content:space-between;
+
+margin:8px 0;
+
+}
+
+
+
+#totale{
+
+font-size:40px;
+
+font-weight:bold;
+
+color:green;
+
+text-align:center;
+
+}
+
+
+
+.tasto{
+
+width:100%;
+
+height:60px;
+
+border:0;
+
+border-radius:20px;
+
+margin-top:10px;
+
+font-size:20px;
+
+color:white;
+
+background:#27ae60;
+
+cursor:pointer;
+
+}
+
+
+
+.reset{
+
+background:#e74c3c;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+🍦 CASSA GELATERIA DOLCE FRESCHEZZA 🍦
+</header>
+
+
+<div class="cassa">
+
+
+<div class="menu">
+
+<h2>Menu</h2>
+
+<button onclick="categoria('gelati')">
+🍦 Gelati
+</button>
+
+<button onclick="categoria('yogurt')">
+🍨 Yogurt
+</button>
+
+<button onclick="categoria('bubble')">
+🧋 Bubble Tea
+</button>
+
+<button onclick="categoria('dolci')">
+🥞 Dolci
+</button>
+
+<button onclick="categoria('granite')">
+🧊 Granite
+</button>
+
+<button onclick="categoria('bibite')">
+🥤 Bibite
+</button>
+
+
 </div>
 
-<div class="prodotto" onclick="aggiungi('Cono 2 gusti',3)">
-🍦 Cono 2 gusti<br>€3,00
+
+
+<div class="prodotti">
+
+<div class="griglia" id="griglia">
+
 </div>
 
-<div class="prodotto" onclick="aggiungi('Coppetta 2 gusti',3)">
-🥣 Coppetta 2 gusti<br>€3,00
-</div>
-
-<div class="prodotto" onclick="aggiungi('Cono 3 gusti',4)">
-🍦 Cono 3 gusti<br>€4,00
-</div>
-
-<div class="prodotto" onclick="aggiungi('Yogurt grande',5)">
-🍨 Yogurt grande<br>€5,00
-</div>
-
-<div class="prodotto" onclick="aggiungi('Bubble Tea Mango',5)">
-🧋 Bubble Tea Mango<br>€5,00
-</div>
-
-<div class="prodotto" onclick="aggiungi('Crêpes Nutella',5)">
-🥞 Crêpes Nutella<br>€5,00
-</div>
-
-<div class="prodotto" onclick="aggiungi('Granita Limone',3)">
-🧊 Granita Limone<br>€3,00
-</div>
-
-<div class="prodotto" onclick="aggiungi('Coca Cola',2)">
-🥤 Coca Cola<br>€2,00
 </div>
 
 
+
+<div class="ordine">
+
+<h2>🧾 Ordine</h2>
+
+<div id="lista">
+Nessun prodotto
+</div>
+
+
+<h2>Totale</h2>
+
+<div id="totale">
+€0.00
+</div>
+
+
+<button class="tasto" onclick="pagamento()">
+💳 Paga
+</button>
+
+
+<button class="tasto reset" onclick="nuovoOrdine()">
+🔄 Nuovo ordine
+</button>
+
+
+</div>
+
+
+</div>
 <script>
 
-let totale = 0;
+
 let ordine = [];
 
-function aggiungi(nome, prezzo){
-
-    totale += prezzo;
-
-    ordine.push(nome);
-
-    document.getElementById("lista").innerHTML =
-    ordine.map(p => "🍦 " + p).join("<br>");
-
-    document.getElementById("totale").innerHTML =
-    "€" + totale.toFixed(2);
-
-}
-
-
-function azzera(){
-
-    totale = 0;
-    ordine = [];
-
-    document.getElementById("lista").innerHTML =
-    "Nessun prodotto";
-
-    document.getElementById("totale").innerHTML =
-    "€0.00";
-
-}
-
-</script><script>
-
 let totale = 0;
-let ordine = [];
 
 
-let prodotti = {
+
+const prodotti = {
+
 
 gelati:[
+
 ["🍦 Cono 1 gusto",2.50],
 ["🍦 Cono 2 gusti",3],
 ["🍦 Cono 3 gusti",4],
+["🥣 Coppetta 1 gusto",2.50],
 ["🥣 Coppetta 2 gusti",3],
-["🥣 Coppetta 3 gusti",4]
+["🥣 Coppetta 3 gusti",4],
+["🍫 Cioccolato",0],
+["🍓 Fragola",0],
+["🥜 Pistacchio",0],
+["🌰 Nocciola",0],
+["🍦 Crema",0],
+["🍨 Vaniglia",0]
+
 ],
 
+
+
 yogurt:[
+
 ["🍨 Yogurt piccolo",3],
 ["🍨 Yogurt medio",4],
 ["🍨 Yogurt grande",5],
-["🍫 Nutella extra",1.5]
+["🍫 Nutella extra",1.5],
+["🍓 Fragole extra",1.5],
+["🍪 Biscotti extra",1.5]
+
 ],
 
-bibite:[
-["🥤 Coca Cola",2],
-["🍊 Fanta",2],
-["🍋 Sprite",2],
-["💧 Acqua",1]
+
+
+bubble:[
+
+["🧋 Bubble Mango",5],
+["🧋 Bubble Fragola",5],
+["🧋 Bubble Pesca",5],
+["🧋 Bubble Classico",5]
+
 ],
+
+
 
 dolci:[
+
 ["🥞 Crêpes Nutella",5],
 ["🥞 Crêpes Pistacchio",5],
 ["🧇 Waffle",4],
 ["🍰 Tiramisù",4]
+
+],
+
+
+
+granite:[
+
+["🧊 Granita Limone",3],
+["🧊 Granita Fragola",3],
+["🧊 Granita Mango",3],
+["🧊 Granita Amarena",3]
+
+],
+
+
+
+bibite:[
+
+["🥤 Coca Cola",2],
+["🍊 Fanta",2],
+["🍋 Sprite",2],
+["💧 Acqua",1],
+["🧃 Tè Pesca",2]
+
 ]
+
 
 };
 
 
 
-function mostra(categoria){
-
-let area = document.getElementById("prodotti");
-
-area.innerHTML="";
 
 
-prodotti[categoria].forEach(p=>{
+function categoria(nome){
 
 
-let bottone=document.createElement("button");
+let box=document.getElementById("griglia");
 
-bottone.className="prodotto";
 
-bottone.innerHTML =
+box.innerHTML="";
+
+
+prodotti[nome].forEach(p=>{
+
+
+let b=document.createElement("button");
+
+
+b.className="prodotto";
+
+
+b.innerHTML=
 p[0]+"<br>€"+p[1].toFixed(2);
 
 
-bottone.onclick=function(){
+
+b.onclick=function(){
 
 aggiungi(p[0],p[1]);
 
 };
 
 
-area.appendChild(bottone);
+
+box.appendChild(b);
 
 
 });
@@ -145,18 +458,57 @@ area.appendChild(bottone);
 
 
 
+
 function aggiungi(nome,prezzo){
 
 
-totale += prezzo;
+let trovato=ordine.find(x=>x.nome===nome);
 
-ordine.push(nome);
+
+if(trovato){
+
+trovato.quantita++;
+
+}else{
+
+
+ordine.push({
+
+nome:nome,
+
+prezzo:prezzo,
+
+quantita:1
+
+});
+
+
+}
 
 
 aggiorna();
 
 
 }
+
+
+
+
+
+function rimuovi(indice){
+
+
+ordine.splice(indice,1);
+
+
+aggiorna();
+
+
+}
+
+
+
+
 
 
 
@@ -166,35 +518,77 @@ function aggiorna(){
 let lista=document.getElementById("lista");
 
 
-if(ordine.length===0){
-
-lista.innerHTML="Nessun prodotto";
-
-}else{
-
-lista.innerHTML =
-ordine.map(x=>"🍦 "+x).join("<br>");
-
-}
-
-
-document.getElementById("totale").innerHTML =
-"€"+totale.toFixed(2);
-
-
-}
-
-
-
-function azzera(){
+lista.innerHTML="";
 
 
 totale=0;
 
+
+
+if(ordine.length===0){
+
+lista.innerHTML="Nessun prodotto";
+
+
+}else{
+
+
+ordine.forEach((p,i)=>{
+
+
+totale += p.prezzo*p.quantita;
+
+
+
+lista.innerHTML +=
+
+`
+
+<div class="riga">
+
+<span>
+
+${p.nome}
+
+x${p.quantita}
+
+</span>
+
+
+<button onclick="rimuovi(${i})">
+
+❌
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+document.getElementById("totale").innerHTML=
+
+"€"+totale.toFixed(2);
+
+
+
+}
+function nuovoOrdine(){
+
 ordine=[];
 
-aggiorna();
+totale=0;
 
+aggiorna();
 
 }
 
@@ -203,29 +597,68 @@ aggiorna();
 function pagamento(){
 
 
-if(totale==0){
+if(totale===0){
 
-alert("Nessun prodotto nell'ordine");
+alert("Inserisci prima dei prodotti nell'ordine!");
 
-}else{
-
-alert("Pagamento completato! Totale €"+totale.toFixed(2));
-
-azzera();
+return;
 
 }
 
 
+let metodo=prompt(
+"Metodo di pagamento:\n1 = Contanti\n2 = Carta"
+);
+
+
+
+if(metodo=="1"){
+
+alert(
+"Pagamento in contanti completato!\nTotale: €"+
+totale.toFixed(2)
+);
+
 }
 
 
-// apre subito i gelati
 
-mostra("gelati");
+else if(metodo=="2"){
+
+alert(
+"Pagamento con carta completato!\nTotale: €"+
+totale.toFixed(2)
+);
+
+}
+
+
+else{
+
+alert("Metodo non valido");
+
+return;
+
+}
+
+
+
+nuovoOrdine();
+
+
+}
+
+
+
+
+// apre automaticamente i gelati
+
+categoria("gelati");
 
 
 </script>
 
 
 </body>
+
 </html>
