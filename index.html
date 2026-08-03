@@ -699,20 +699,18 @@ Nessun prodotto
 let totale = 0;
 let ordine = [];
 let cassiera = "";
-
-
 function entra(nome){
 
-cassiera = nome;
+document.getElementById("login").style.display = "none";
 
-document.getElementById("login").style.display="none";
-
-document.getElementById("cassa").style.display="block";
+document.getElementById("cassa").style.display = "block";
 
 document.getElementById("nomeCassiera").innerHTML =
 "👩 Cassiera: " + nome;
 
 }
+
+
 
 
 
