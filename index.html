@@ -7,11 +7,10 @@
 <title>Cassa Gelateria Dolce Freschezza</title>
 
 <style>
-
 body{
 margin:0;
-font-family:Arial;
-background:#fff4f8;
+font-family:Arial,sans-serif;
+background:#fff5ea;
 }
 
 header{
@@ -19,24 +18,24 @@ background:linear-gradient(90deg,#ff6f91,#ff9f43);
 color:white;
 padding:20px;
 text-align:center;
-font-size:28px;
+font-size:30px;
 font-weight:bold;
 }
 
 button{
 border:0;
-border-radius:20px;
+border-radius:18px;
 padding:12px;
 margin:5px;
 background:#ff9f43;
 color:white;
 font-size:16px;
-cursor:pointer;
+font-weight:bold;
 }
 
 .login{
 text-align:center;
-padding:50px;
+padding:40px;
 }
 
 .cassa{
@@ -58,15 +57,15 @@ gap:10px;
 
 .prodotto{
 background:white;
+color:#333;
 box-shadow:0 4px 10px #ccc;
-min-height:70px;
 }
 
 .ordine{
 background:white;
 padding:15px;
 border-radius:20px;
-margin-top:20px;
+margin-top:15px;
 }
 
 #totale{
@@ -75,14 +74,18 @@ color:green;
 font-weight:bold;
 }
 
-</style>
+.calcolatrice button{
+background:#555;
+width:55px;
+}
 
+</style>
 </head>
 
 <body>
 
 <header>
-🍦 Gelateria Dolce Freschezza 🍦
+🍦 CASSA GELATERIA DOLCE FRESCHEZZA 🍦
 </header>
 
 
@@ -119,9 +122,7 @@ font-weight:bold;
 </div>
 
 
-<div class="prodotti" id="prodotti">
-
-</div>
+<div id="prodotti" class="prodotti"></div>
 
 
 <div class="ordine">
@@ -138,19 +139,47 @@ Nessun prodotto
 <div id="totale">
 €0.00
 </div>
-<button onclick="paga()">
-💳 Paga
+<input id="soldi" placeholder="Soldi ricevuti €" readonly>
+
+<div class="calcolatrice">
+
+<button onclick="numero(1)">1</button>
+<button onclick="numero(2)">2</button>
+<button onclick="numero(3)">3</button>
+
+<button onclick="numero(4)">4</button>
+<button onclick="numero(5)">5</button>
+<button onclick="numero(6)">6</button>
+
+<button onclick="numero(7)">7</button>
+<button onclick="numero(8)">8</button>
+<button onclick="numero(9)">9</button>
+
+<button onclick="numero(0)">0</button>
+<button onclick="cancella()">❌</button>
+
+</div>
+
+
+<button onclick="contanti()">
+💵 Contanti
 </button>
 
-<input id="soldi" type="number" placeholder="Soldi ricevuti €">
+<button onclick="carta()">
+💳 Carta
+</button>
+
 
 <div id="resto"></div>
+
 
 <button onclick="nuovoOrdine()">
 🔄 Nuovo ordine
 </button>
 
+
 </div>
+
 
 </div>
 
@@ -180,26 +209,24 @@ gelati:[
 ["🥭 Mango",2.5],
 ["🍑 Pesca",2.5],
 ["🫐 Frutti di bosco",2.5],
-["🍫 Cioccolato bianco",2.5],
+["🍫 Ciocco bianco",2.5],
 ["🍪 Cookies",2.5],
-["🍯 Caramello salato",2.5],
+["🍯 Caramello",2.5],
 ["🍰 Tiramisù",2.5]
 ],
 
 yogurt:[
 ["🍨 Yogurt piccolo",3],
-["🍨 Yogurt medio",4],
 ["🍨 Yogurt grande",5],
-["🍫 Nutella extra",1.5],
-["🍓 Fragole extra",1.5]
+["🍫 Nutella",1.5],
+["🍓 Fragole",1.5]
 ],
 
 granite:[
 ["🍋 Limone",3],
 ["🍓 Fragola",3],
 ["🥭 Mango",3],
-["🍒 Amarena",3],
-["🍉 Anguria",3]
+["🍒 Amarena",3]
 ],
 
 bibite:[
@@ -207,21 +234,17 @@ bibite:[
 ["🍊 Fanta",2],
 ["🍋 Sprite",2],
 ["💧 Acqua",1],
-["🧃 Tè pesca",2],
-["🧃 Tè limone",2],
-["☕ Caffè",1.5]
+["🧃 Tè Pesca",2]
 ],
 
 bubble:[
 ["🧋 Bubble Mango",5],
 ["🧋 Bubble Fragola",5],
-["🧋 Bubble Pesca",5],
-["🧋 Bubble Lychee",5]
+["🧋 Bubble Pesca",5]
 ],
 
 dolci:[
 ["🥞 Crêpes Nutella",5],
-["🥞 Crêpes Pistacchio",5],
 ["🧇 Waffle",4],
 ["🍩 Donut",3]
 ]
@@ -256,13 +279,15 @@ let b=document.createElement("button");
 
 b.className="prodotto";
 
-b.innerHTML=p[0]+"<br>€"+p[1];
+b.innerHTML=p[0]+"<br>€"+p[1].toFixed(2);
+
 
 b.onclick=function(){
 
 aggiungi(p[0],p[1]);
 
 };
+
 
 box.appendChild(b);
 
@@ -294,36 +319,30 @@ document.getElementById("totale").innerHTML=
 
 }
 
-function aggiungiSoldi(numero){
 
-let campo=document.getElementById("soldi");
 
-campo.value += numero;
+function numero(n){
+
+document.getElementById("soldi").value += n;
 
 }
 
 
-function cancellaSoldi(){
+
+function cancella(){
 
 document.getElementById("soldi").value="";
 
 }
 
-function paga(){
 
-let soldi=
-Number(document.getElementById("soldi").value);
 
+function contanti(){
+
+let soldi=Number(document.getElementById("soldi").value);
 
 let resto=soldi-totale;
 
-
-if(resto<0){
-
-document.getElementById("resto").innerHTML=
-"❌ Mancano €"+(-resto).toFixed(2);
-
-}else{
 
 document.getElementById("resto").innerHTML=
 "💶 Resto cliente: €"+resto.toFixed(2);
@@ -332,15 +351,23 @@ alert("Pagamento completato 🧾");
 
 }
 
+
+
+function carta(){
+
+alert("💳 Pagamento con carta completato!");
+
+nuovoOrdine();
+
 }
 
 
 
 function nuovoOrdine(){
 
-ordine=[];
-
 totale=0;
+
+ordine=[];
 
 document.getElementById("soldi").value="";
 
@@ -349,7 +376,6 @@ document.getElementById("resto").innerHTML="";
 aggiorna();
 
 }
-
 
 
 mostra("gelati");
